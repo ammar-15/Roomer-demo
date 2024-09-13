@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+        <title>Intro</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="header-container">
+            <h1>Housekeeping Checkout Sheet</h1>
+            <div class="date-container">
+            <div class="time"></div>
+            <div class="date"></div>
+            </div>
+        </div>
+            <div class="dailyData-container">
+            <div class="dailyData">
+                <div class="inHouse">Inhouse: 
+                    <input type="text" id="inhouse-input" placeholder="Enter data">
+                </div>
+                <div class="stayovers">Stayovers: 
+                    <input type="text" id="totalstayovers-input" placeholder="Enter data">
+                </div>
+                <div class="checkouts">Checkouts: 
+                    <input type="text" id="totalcheckouts-input" placeholder="Enter data">
+                </div>
+            </div>
+            </div>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.html"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="intro.html">Intro</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="lateCheckouts.html">Late Checkouts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="newStayovers.html">New Stayovers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="noShows.html">No Shows</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="notes.html">Notes</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        <main class="intro-main">
+            <div class="intro-container">
+                <h2 class="">Welcome!</h2>
+<p>Welcome to Roomer! Roomer is a web application designed to streamline communication between the front desk and the housekeeping department in a hotel. Here’s a detailed walkthrough of the app's features and how to use them:</p>
+
+<h3>Home Page</h3>
+<p>
+    <strong>Date and Time</strong>: The top section displays the current date and time, along with daily information including guests staying in-house, those continuing their stay, and the total number of checkouts for the day.<br>
+    <strong>Print Option</strong>: At the end of the day, you can print all the data from all pages. This hard copy helps locate any errors or room-specific information in the future and can be filed away with the daily paperwork.<br>
+    <strong>Reset All Button</strong>: This button clears all data from the Cloud Firestore database to prepare for the next day.<br>
+    <strong>Checkouts Screen</strong>: <br>
+    - <em>Room Input</em>: Add a room that has checked out, and it will automatically be assigned to its respective floor (1st, 2nd, 3rd, 4th).<br>
+    - <em>Search Room</em>: Search for any room using the input box.<br>
+    - <em>Remove Room</em>: If you accidentally added a wrong room or if a room decides to stay another night after checking out, you can remove it using this feature.
+</p>
+
+<h3>Late Checkouts Page</h3>
+<p>
+    <strong>Late Checkouts Information</strong>: Displays information about rooms checking out after the standard checkout time (12 PM, 1 PM, or 2 PM).<br>
+    <strong>Checkbox</strong>: Mark a room as left using the checkbox.<br>
+</p>
+
+<h3>New Stayovers Page</h3>
+<p>
+    <strong>New Stayovers Information</strong>: Add rooms that were originally due to check out but have decided to stay another night. This helps housekeeping receive real-time updates.<br>
+    <strong>Checkbox</strong>: Mark necessary procedures as completed for the stayover room.
+</p>
+
+<h3>No Shows Page</h3>
+<p>
+    <strong>No Shows Information</strong>: Lists rooms that didn’t check in last night.<br>
+    <strong>Checkbox</strong>: Mark them as completed for payment and out of the system.
+</p>
+
+<h3>Notes Page</h3>
+<p>
+    <strong>Notes</strong>: Pass information to the housekeeping department about rooms needing extra cleaning, towels, sheets, coffee cups, maintenance, etc.<br>
+    <strong>Search Box</strong>: Search for specific notes.<br>
+    <strong>Remove Note</strong>: Double-click on a note to remove it. An alert will pop up to confirm the deletion, preventing accidental clicks. An update for the delete note feature on mobile view is coming soon!
+</p>
+
+<p>For more information or to get in touch, visit my <a href="https://www.linkedin.com/in/ammarfaruqui">LinkedIn</a> and check out the project on <a href="https://www.github.com/ammar-15">GitHub</a>.</p>
+
+            </div>
+        </main>
+        
+        <script src="javascript/intro.js" async defer></script>
+        <script type="module" src="javascript/index.js" async defer></script>
+    </body>
+</html>

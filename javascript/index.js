@@ -95,9 +95,9 @@ const checkoutsInput = document.getElementById("totalcheckouts-input");
 
 loadDailyData();
 
-inhouseInput.addEventListener("blur", _.debounce(() => saveDailyData("inhouse", inhouseInput.value), 500));
-stayoversInput.addEventListener("blur", _.debounce(() => saveDailyData("stayovers", stayoversInput.value), 500));
-checkoutsInput.addEventListener("blur", _.debounce(() => saveDailyData("checkouts", checkoutsInput.value), 500));
+inhouseInput.addEventListener("blur", debounce(() => saveDailyData("inhouse", inhouseInput.value), 500));
+stayoversInput.addEventListener("blur", debounce(() => saveDailyData("stayovers", stayoversInput.value), 500));
+checkoutsInput.addEventListener("blur", debounce(() => saveDailyData("checkouts", checkoutsInput.value), 500));
 
 async function loadDailyData() {
     const docRef = doc(db, "metadata", "dailyData");

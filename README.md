@@ -2,7 +2,7 @@
 
 Welcome to **Roomer v1**, an innovative web app designed to revolutionize communication between the front desk and housekeeping departments in hotels. Say goodbye to paper sheets and hello to real-time room updates!
 
-[**Deployment**](https://roomer-demo1.web.app)
+[**Deployment**](https://roomer1-demo.web.app)
 
 ## 📢 Introduction
 

@@ -79,15 +79,25 @@ setInterval(updateDateTime, 200);
 
 
 // DAILY DATA //
+
+function debounce(func, delay) {
+    let debounceTimer;
+    return function(...args) {
+        const context = this;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => func.apply(context, args), delay);
+    };
+}
+
 const inhouseInput = document.getElementById("inhouse-input");
 const stayoversInput = document.getElementById("totalstayovers-input");
 const checkoutsInput = document.getElementById("totalcheckouts-input");
 
 loadDailyData();
 
-inhouseInput.addEventListener("blur", () => saveDailyData("inhouse", inhouseInput.value));
-stayoversInput.addEventListener("blur", () => saveDailyData("stayovers", stayoversInput.value));
-checkoutsInput.addEventListener("blur", () => saveDailyData("checkouts", checkoutsInput.value));
+inhouseInput.addEventListener("blur", _.debounce(() => saveDailyData("inhouse", inhouseInput.value), 500));
+stayoversInput.addEventListener("blur", _.debounce(() => saveDailyData("stayovers", stayoversInput.value), 500));
+checkoutsInput.addEventListener("blur", _.debounce(() => saveDailyData("checkouts", checkoutsInput.value), 500));
 
 async function loadDailyData() {
     const docRef = doc(db, "metadata", "dailyData");
@@ -117,27 +127,37 @@ async function saveDailyData(key, value) {
 
 // Print all //
 document.getElementById('printall-button').addEventListener('click', function () {
-    const iframes = document.querySelectorAll('iframe');
+    const iframeSources = [
+        'index.html',
+        'lateCheckouts.html',
+        'newStayovers.html',
+        'noShows.html',
+        'notes.html'
+    ];
     let combinedContent = '';
-    let promises = [];
-
-    iframes.forEach(iframe => {
-        let promise = new Promise((resolve) => {
+    let loadPromises = iframeSources.map(src => {
+        return new Promise((resolve) => {
+            let iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = src;
+            document.body.appendChild(iframe);
             iframe.onload = function() {
-                combinedContent += iframe.contentDocument.body.innerHTML;
+                if (iframe.contentDocument && iframe.contentDocument.body) {
+                    combinedContent += iframe.contentDocument.body.innerHTML;
+                }
+                document.body.removeChild(iframe); 
                 resolve();
             };
-            iframe.src = iframe.src;
+            iframe.onerror = function() {
+                document.body.removeChild(iframe);
+                resolve();
+            };
         });
-        promises.push(promise);
     });
 
-    Promise.all(promises)
+    Promise.all(loadPromises)
         .then(() => {
             printCombinedContent(combinedContent);
-        })
-        .catch((error) => {
-            console.error("An error occurred while loading iframes:", error);
         });
 });
 
@@ -156,7 +176,7 @@ function printCombinedContent(content) {
     setTimeout(() => {
         printWindow.print();
         printWindow.close();
-    }, 5000);
+    }, 1000);
 }
 
 // Reset all //
@@ -186,3 +206,4 @@ async function clearCollection(collectionName) {
 }
 
 document.getElementById('resetall-button').addEventListener('click', resetAll);
+

@@ -15,45 +15,16 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-    <div class="header-container">
-        <h1>Housekeeping Checkout Sheet</h1>
-        <div class="date-container">
-            <div class="time"></div>
-            <div class="date"></div>
-        </div>
-    </div>
-        <div class="dailyData-container">
-            <div class="dailyData">
-                <div class="inHouse">Inhouse: 
-                    <input type="text" id="inhouse-input" placeholder="Enter data">
-                </div>
-                <div class="stayovers">Stayovers: 
-                    <input type="text" id="totalstayovers-input" placeholder="Enter data">
-                </div>
-                <div class="checkouts">Checkouts: 
-                    <input type="text" id="totalcheckouts-input" placeholder="Enter data">
-                </div>
-                <div class="button-container">
-                    <div class="printall-container">
-                        <button id="printall-button"><img src="images/print.svg"></button>
-                    </div>
-                    <div class="resetall-container">
-                        <button id="resetall-button"><img src="images/resetall.svg"></button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
+                <h1>Housekeeping Checkout Sheet</h1>
                 <a class="navbar-brand" href="index.html"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="intro.html">Intro</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="index.html">Home</a>
                         </li>
@@ -69,11 +40,41 @@
                         <li class="nav-item">
                             <a class="nav-link" href="notes.html">Notes</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="intro.html">About</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
+    <div class="header-container">
+        <div class="button-container">
+            <div class="printall-container" title="Print">
+                <button id="printall-button"><img src="images/print.svg"></button>
+                </div>
+            <div class="resetall-container" title="Reset">
+                <button id="resetall-button"><img src="images/resetall.svg"></button>
+            </div>
+        </div>
+        <div class="dailyData-container">
+            <div class="dailyData">
+                <div class="inHouse">Inhouse: 
+                    <input type="text" id="inhouse-input" placeholder="Enter data">
+                </div>
+                <div class="stayovers">Stayovers: 
+                    <input type="text" id="totalstayovers-input" placeholder="Enter data">
+                </div>
+                <div class="checkouts">Checkouts: 
+                    <input type="text" id="totalcheckouts-input" placeholder="Enter data">
+                </div>
 
+            </div>
+        </div>
+        <div class="date-container">
+            <div class="time"></div>
+            <div class="date"></div>
+        </div>
+    </div>
         <main class="addroom-main">
             <div class="addroom-container">
                 <h2 class="addroom-h2">Checkouts</h2>
@@ -94,7 +95,7 @@
                         <option value="default">Default</option>
                         <option value="ascending">Ascending</option>
                         <option value="descending">Descending</option>
-                        <option value="upside-down">Reverse</option>
+                        <option value="upside-down">Recent Rooms</option>
                     </select>
                     <button id="sortbtn" class="sort-button">Sort</button>
                 </div>

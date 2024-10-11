@@ -30,18 +30,20 @@ const db = getFirestore(app);
 
 // Collecting notes
 async function getNotes() {
-    console.log("hello");
     const notesSnapshot = await getDocs(collection(db, "notes"));
-    console.log(notesSnapshot);
-    return notesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return notesSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt ? doc.data().createdAt.toDate() : new Date()  // Ensure createdAt is handled
+    }));
 }
 
-const notesContainer = document.querySelector(".addnotes-container")
+const notesContainer = document.querySelector(".addnotes-container");
 const addNoteButton = document.querySelector(".add-notes");
 
-//Save notes to firebase//
+// Save notes to firebase
 async function saveNoteToFirestore(note) {
-    const docRef = await addDoc(collection(db, "notes"), note);
+    const docRef = await addDoc(collection(db, "notes"), { ...note, createdAt: new Date() });
     return docRef.id;
 }
 
@@ -58,7 +60,7 @@ async function deleteNote(id, element) {
     notesContainer.removeChild(element);
 }
 
-// Create new note
+// Create new note element
 function createNoteElement(id, content = "") {
     const element = document.createElement("div");
     element.classList.add("note-container");
@@ -81,13 +83,13 @@ function createNoteElement(id, content = "") {
     dropdownMenu.style.display = "none";
     dropdownMenu.innerHTML = `<button class="delete-note-btn">Delete</button>`;
 
-    optionsButton.addEventListener("click", () => {
+    optionsButton.addEventListener("click", (event) => {
         dropdownMenu.style.display = dropdownMenu.style.display === "none" ? "block" : "none";
         dropdownMenu.style.opacity = dropdownMenu.style.display === "block" ? "1" : "0";
         event.stopPropagation();
     });
 
-    dropdownMenu.querySelector(".delete-note-btn").addEventListener("click", () => {
+    dropdownMenu.querySelector(".delete-note-btn").addEventListener("click", (event) => {
         const doDelete = confirm("Are you sure you wish to delete this note?");
         if (doDelete) {
             deleteNote(id, element);
@@ -110,22 +112,23 @@ function createNoteElement(id, content = "") {
     return element;
 }
 
-
-// Add new note in firebase
+// Add new note to firebase
 async function addNote() {
     const noteObject = { content: "" };
     const noteId = await saveNoteToFirestore(noteObject);
     const noteElement = createNoteElement(noteId, noteObject.content);
-    notesContainer.insertBefore(noteElement, addNoteButton);
+    document.querySelector('.addnotes-container').appendChild(noteElement); 
     noteElement.setAttribute('data-id', noteId);
 }
 
 // Load notes from firebase
 async function loadNotes() {
     const notes = await getNotes();
+    const notesContainer = document.querySelector('.addnotes-container');
+    notesContainer.innerHTML = ''; 
     notes.forEach(note => {
         const noteElement = createNoteElement(note.id, note.content);
-        notesContainer.insertBefore(noteElement, addNoteButton);
+        notesContainer.appendChild(noteElement); 
     });
 }
 
@@ -143,8 +146,34 @@ function searchNote() {
         }
     });
 }
+// Sort notes
+async function sortNotes() {
+    const sortOption = document.getElementById('sort-notes-dropdown').value;
+    const notes = await getNotes();
+    
+    let sortedNotes = [...notes];  // Create a copy of the notes array
+
+    if (sortOption === 'ascending') {
+        sortedNotes.sort((a, b) => a.content.localeCompare(b.content));
+    } else if (sortOption === 'descending') {
+        sortedNotes.sort((a, b) => b.content.localeCompare(a.content));
+    } else if (sortOption === 'oldest') {
+        sortedNotes.sort((a, b) => a.createdAt - b.createdAt);
+    } else {
+        sortedNotes.sort((a, b) => b.createdAt - a.createdAt);  // Default: recent
+    }
+
+    const notesContainer = document.querySelector('.addnotes-container');
+    notesContainer.innerHTML = '';  // Clear the current notes (but not the Add Note button)
+
+    sortedNotes.forEach(note => {
+        const noteElement = createNoteElement(note.id, note.content);
+        notesContainer.appendChild(noteElement);  // Re-add sorted notes
+    });
+}
 
 loadNotes();
 
 addNoteButton.addEventListener("click", addNote);
 document.getElementById("searchnoteinput-button").addEventListener("input", searchNote);
+document.getElementById('sort-notes-button').addEventListener('click', sortNotes);

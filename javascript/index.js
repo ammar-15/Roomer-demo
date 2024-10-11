@@ -77,9 +77,7 @@ function loadDateTime() {
 loadDateTime();
 setInterval(updateDateTime, 200);
 
-
 // DAILY DATA //
-
 function debounce(func, delay) {
     let debounceTimer;
     return function(...args) {
@@ -206,4 +204,3 @@ async function clearCollection(collectionName) {
 }
 
 document.getElementById('resetall-button').addEventListener('click', resetAll);
-

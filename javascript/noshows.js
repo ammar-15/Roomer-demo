@@ -30,9 +30,15 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Adding room to firebase
+document.getElementById("noshowsinput-button").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        document.getElementById("addNSbtn").click();
+    }
+});
+
 async function addRoomNS() {
     const inputBoxNS = document.getElementById("noshowsinput-button");
-    const listContainerNS = document.querySelector(".noshows-list");
+    const listContainerNS = document.querySelector(".noshows-list-container");
 
     if (inputBoxNS.value.trim() === "") {
         alert("Please enter a room");
@@ -60,7 +66,7 @@ async function addRoomNS() {
 
 // Load rooms from firebase
 async function showNS() {
-    const listContainerNS = document.querySelector(".noshows-list");
+    const listContainerNS = document.querySelector(".noshows-list-container");
     listContainerNS.innerHTML = ""; 
 
     const q = query(collection(db, "noshows"), orderBy("createdAt"));
@@ -89,9 +95,15 @@ async function updateRoomNS(id, checked) {
 }
 
 // Remove room from firebase
+document.getElementById("removenoshowsinput-button").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        document.getElementById("removeNSbtn").click();
+    }
+});
+
 async function removeRoomNS() {
     const removeBoxNS = document.getElementById("removenoshowsinput-button");
-    const listContainerNS = document.querySelector(".noshows-list");
+    const listContainerNS = document.querySelector(".noshows-list-container");
 
     if (removeBoxNS.value.trim() === "") {
         alert("Please enter a room");

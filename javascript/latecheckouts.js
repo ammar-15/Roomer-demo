@@ -29,10 +29,18 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Adding room to firebase
+
+document.getElementById("latecheckoutinput-button").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        document.getElementById("addLCbtn").click();
+    }
+});
+
+
 async function addRoomLC() {
     const inputBoxLC = document.getElementById("latecheckoutinput-button");
     const selectTimeLC = document.getElementById("latecheckout-time");
-    const listContainerLC = document.querySelector(".latecheckout-list");
+    const listContainerLC = document.querySelector(".latecheckout-list-container");
 
     if (inputBoxLC.value.trim() === "") {
         alert("Please enter a room");
@@ -61,7 +69,7 @@ async function addRoomLC() {
 
 // Load rooms from firebase
 async function showLC() {
-    const listContainerLC = document.querySelector(".latecheckout-list");
+    const listContainerLC = document.querySelector(".latecheckout-list-container");
     listContainerLC.innerHTML = "";
 
     const q = query(collection(db, "latecheckouts"), orderBy("createdAt"));
@@ -90,9 +98,15 @@ async function updateRoomLC(id, checked) {
 }
 
 // Remove room from firebase
+document.getElementById("removelatecheckoutinput-button").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        document.getElementById("removeLCbtn").click();
+    }
+});
+
 async function removeRoomLC() {
     const removeBoxLC = document.getElementById("removelatecheckoutinput-button");
-    const listContainerLC = document.querySelector(".latecheckout-list");
+    const listContainerLC = document.querySelector(".latecheckout-list-container");
 
     if (removeBoxLC.value.trim() === "") {
         alert("Please enter a room");

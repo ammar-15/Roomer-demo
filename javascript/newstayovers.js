@@ -30,9 +30,15 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Adding room to firebase
+document.getElementById("newstayoversinput-button").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        document.getElementById("addNStaybtn").click();
+    }
+});
+
 async function addRoomNStay() { 
     const inputBoxNStay = document.getElementById("newstayoversinput-button"); 
-    const listContainerNStay = document.querySelector(".newstayovers-list"); 
+    const listContainerNStay = document.querySelector(".newstayovers-list-container"); 
 
     if (inputBoxNStay.value.trim() === "") { 
         alert("Please enter a room");
@@ -60,7 +66,7 @@ async function addRoomNStay() {
 
 // Load rooms from firebase
 async function showNStay() {
-    const listContainerNStay = document.querySelector(".newstayovers-list");
+    const listContainerNStay = document.querySelector(".newstayovers-list-container");
     listContainerNStay.innerHTML = ""; 
 
     const q = query(collection(db, "newstayovers"), orderBy("createdAt"));
@@ -89,9 +95,15 @@ async function updateRoomNStay(id, checked) {
 }
 
 // Remove room from firebase
+document.getElementById("removenewstayoversinput-button").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        document.getElementById("removeNStaybtn").click();
+    }
+});
+
 async function removeRoomNStay() { 
     const removeBoxNStay = document.getElementById("removenewstayoversinput-button"); 
-    const listContainerNStay = document.querySelector(".newstayovers-list"); 
+    const listContainerNStay = document.querySelector(".newstayovers-list-container"); 
 
     if (removeBoxNStay.value.trim() === "") { 
         alert("Please enter a room");

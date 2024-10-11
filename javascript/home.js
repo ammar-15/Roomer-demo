@@ -21,18 +21,19 @@ const firebaseConfig = {
     messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
     appId: FIREBASE_APP_ID
   };
+  
 // Initialize firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 console.log(db); 
 
+// Adding room to firebase
 document.getElementById("addroominput-button").addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         document.getElementById("addbtn").click();
     }
 });
 
-// Adding room to firebase
 async function addRoom() {
     const inputBox = document.getElementById("addroominput-button");
     const firstFloorList = document.querySelector(".first-content");
@@ -40,12 +41,14 @@ async function addRoom() {
     const thirdFloorList = document.querySelector(".third-content");
     const fourthFloorList = document.querySelector(".fourth-content");
 
-    if (inputBox.value.trim() === "") {
-        alert("Please enter a room");
-    } else {
+    const roomNumber = parseInt(inputBox.value.trim());
+    
+    if (isNaN(roomNumber) || roomNumber < 100 || roomNumber >= 500) {
+        alert("Please enter a valid room number (e.g., 101, 232, 312, 462, etc.).");
+        return inputBox.value = "";;
+    }
         let li = document.createElement("li");
         li.textContent = inputBox.value.trim();
-
         let floor = "";
         if (inputBox.value > 100 && inputBox.value < 200) {
             firstFloorList.appendChild(li);
@@ -67,7 +70,7 @@ async function addRoom() {
             await addRoomToFirestore(floor, li.textContent); 
         }
     }
-}
+
 
 // Save room to firebase
 async function addRoomToFirestore(floor, room) { 
